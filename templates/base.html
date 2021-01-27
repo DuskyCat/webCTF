@@ -1,0 +1,52 @@
+<!doctype html>
+<html>
+  <head>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap.min.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap-theme.min.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/non-responsive.css') }}">
+    <meta charset='utf-8'/>
+    <meta name='viewport' content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
+    <title>{% block title %}{% endblock %} | play</title>
+    {% block head %}{% endblock %}
+  </head>
+<body>
+
+    <!-- Fixed navbar -->
+    <nav class="navbar navbar-default navbar-fixed-top">
+      <div class="container">
+        <div class="navbar-header">
+          <a class="navbar-brand" href="/">Home</a>
+        </div>
+
+        <div id="navbar">
+
+        </div><!--/.nav-collapse -->
+
+          {% if session %}         
+          <ul class="nav navbar-nav  navbar-right">
+            <li><a href="/logout">logout</a></li>
+          </ul>
+          {% else %}
+
+          <ul class="nav navbar-nav  navbar-right">
+            <li><a href="/register">register</a></li>
+            <li><a href="/login">login</a></li>
+          </ul>
+          {% endif %}
+
+      </div>
+    </nav>
+
+    <div class="container">
+      {% block content %}
+
+      {% endblock %}
+
+ 
+    </div> <!-- /container -->
+
+    <!-- Bootstrap core JavaScript -->
+    <script src="{{ url_for('static', filename='js/jquery.min.js')}}"></script>
+    <script src="{{ url_for('static', filename='js/bootstrap.min.js') }}"></script> 
+</body>
+</html>
