@@ -1,4 +1,4 @@
-from flask import Flask, request, render_template, make_response, redirect, url_for, session, g
+from flask import Flask, request, render_template, render_template_string, make_response, redirect, url_for, session, g
 import sqlite3
 import hashlib
 import os
@@ -81,7 +81,17 @@ def register():
         conn.commit()
         return "<script>alert('Register Success');location.href='/login';</script>"
 
-
+@app.route('/<path:file>')
+def test(file):
+    if session:
+        if 'admin' in session['userid']:
+            def filter(s):
+                s = s.replace('(', '').replace(')', '')
+                blacklist = ['config', 'self']
+                return ''.join(['{{% set {}=None%}}'.format(c) for c in blacklist])+s
+            return render_template_string(filter(file))
+        return "you need join with admin"
+    return "you are not logged in"
 
 if __name__ == '__main__': 
     app.run(host='0.0.0.0', port='2222', debug=True)
