@@ -22,7 +22,10 @@
 
         </div><!--/.nav-collapse -->
 
-          {% if session %}         
+          {% if session %}
+          <ul class="nav navbar-nav">
+            <li><a href="/notice">notice</a></li>
+          </ul>          
           <ul class="nav navbar-nav  navbar-right">
             <li><a href="/logout">logout</a></li>
           </ul>
@@ -33,7 +36,6 @@
             <li><a href="/login">login</a></li>
           </ul>
           {% endif %}
-
       </div>
     </nav>
 

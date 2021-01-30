@@ -16,6 +16,7 @@ userLevel = {
     1 : 'admin'
 }
 
+
 def get_db():
     db = getattr(g, '_database', None)
     if db is None:
@@ -41,10 +42,11 @@ def login():
     else:
         userid = request.form.get("userid")
         password = request.form.get("password")
-
+        if userid !='admin':
+            password = hashlib.sha256(password.encode()).hexdigest()
         conn = get_db()
         cur = conn.cursor()
-        user = cur.execute('SELECT * FROM user WHERE id = ? and pw = ?', (userid, hashlib.sha256(password.encode()).hexdigest() )).fetchone()
+        user = cur.execute('SELECT * FROM user WHERE id = ? and pw = ?', (userid, password )).fetchone()
         
         if user:
             session['idx'] = user['idx']
@@ -81,6 +83,17 @@ def register():
         conn.commit()
         return "<script>alert('Register Success');location.href='/login';</script>"
 
+@app.route('/notice')
+def board():
+    if session:
+        by=request.args.get("by",default='idx')
+        conn = get_db()
+        cur = conn.cursor()
+        lists = cur.execute('SELECT * FROM board order by '+by).fetchall() 
+        return render_template('notice.html',lists=lists)
+    return "<script>alert('login first');location.href='/';</script>"
+
+
 @app.route('/<path:file>')
 def test(file):
     if session:
@@ -94,4 +107,4 @@ def test(file):
     return "you are not logged in"
 
 if __name__ == '__main__': 
-    app.run(host='0.0.0.0', port='2222', debug=True)
+    app.run(host='0.0.0.0', port='2322', debug=True)
