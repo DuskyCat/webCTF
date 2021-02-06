@@ -10,7 +10,6 @@ app.secret_key = os.urandom(32)
 DATABASE = "database.db"
 
 
-
 userLevel = {
     0 : 'guest',
     1 : 'admin'
@@ -55,6 +54,7 @@ def login():
             return redirect(url_for('index'))
 
         return "<script>alert('Wrong id/pw');history.back(-1);</script>";
+
 
 @app.route('/logout')
 def logout():
