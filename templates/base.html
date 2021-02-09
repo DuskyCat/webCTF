@@ -1,44 +1,37 @@
 <!doctype html>
 <html>
   <head>
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap.min.css') }}">
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap-theme.min.css') }}">
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/non-responsive.css') }}">
+    <link rel="stylesheet" href="//unpkg.com/bootstrap@4/dist/css/bootstrap.min.css">
     <meta charset='utf-8'/>
     <meta name='viewport' content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
     <title>{% block title %}{% endblock %} | play</title>
     {% block head %}{% endblock %}
   </head>
 <body>
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <a class="navbar-brand" href="/">Home</a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
 
-    <!-- Fixed navbar -->
-    <nav class="navbar navbar-default navbar-fixed-top">
-      <div class="container">
-        <div class="navbar-header">
-          <a class="navbar-brand" href="/">Home</a>
-        </div>
+  <div class="collapse navbar-collapse" id="navbarSupportedContent">
+    <ul class="navbar-nav mr-auto">
+      
+    {% if session['userid'] %}
+      <li><a class="nav-link" href="/notice">notice</a></li>
+    {% endif %}
 
-        <div id="navbar">
-
-        </div><!--/.nav-collapse -->
-
-          {% if session %}
-          <ul class="nav navbar-nav">
-            <li><a href="/notice">notice</a></li>
-          </ul>          
-          <ul class="nav navbar-nav  navbar-right">
-            <li><a href="/logout">logout</a></li>
-          </ul>
-          {% else %}
-
-          <ul class="nav navbar-nav  navbar-right">
-            <li><a href="/register">register</a></li>
-            <li><a href="/login">login</a></li>
-          </ul>
-          {% endif %}
-      </div>
-    </nav>
-
+    </ul>
+    <ul class='navbar-nav'>
+    {% if session['userid'] %}
+      <li><a class="nav-link" href="/logout">logout</a></li>
+    {% else %}
+      <li><a class="nav-link" href="/register">register</a></li>
+      <li><a class="nav-link" href="/login">login</a></li>
+    {% endif %}
+    </ul
+  </div>
+</nav>
     <div class="container">
       {% block content %}
 
@@ -47,8 +40,8 @@
  
     </div> <!-- /container -->
 
-    <!-- Bootstrap core JavaScript -->
-    <script src="{{ url_for('static', filename='js/jquery.min.js')}}"></script>
-    <script src="{{ url_for('static', filename='js/bootstrap.min.js') }}"></script> 
+    <script src='//unpkg.com/jquery@3/dist/jquery.min.js'></script>
+    <script src='//unpkg.com/popper.js@1/dist/umd/popper.min.js'></script>
+    <script src='//unpkg.com/bootstrap@4/dist/js/bootstrap.min.js'></script> 
 </body>
 </html>
